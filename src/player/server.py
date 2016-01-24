@@ -35,7 +35,7 @@ def connect_to_referee():
     url = 'http://{host}:{port}/tournament/connect/'.format(
         host=referee_host, port=referee_port
     )
-    player_id = 1
+    player_id = random.randrange(1, 100000000)  # for testing
     requests.post(url, data={
         'player_id': player_id
     })
@@ -48,7 +48,9 @@ def connect_to_referee():
 if __name__ == '__main__':
     # TODO: Do this asynchronously so server is allowed to start? grequests?
     connect_to_referee()
-    app.run(debug=True, port=5001)
+
+    port = random.randrange(5001, 11000)
+    app.run(debug=True, port=port)
 
 
 '''
