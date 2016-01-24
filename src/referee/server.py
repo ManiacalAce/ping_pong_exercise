@@ -2,12 +2,11 @@ import threading
 
 from flask import Flask, request, jsonify
 
+from players import (MAX_TOURNEY_PLAYERS, connected_players)
+
 
 app = Flask(__name__)
 logger = app.logger
-
-MAX_TOURNEY_PLAYERS = 2
-connected_players = set()  # should be stored in some persistent storage
 
 
 def start_tourney():
