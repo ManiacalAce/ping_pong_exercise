@@ -73,6 +73,7 @@
         comm.
     - As before, but instead of threads, use a 'messaging' approach. Would need
         a message queue storage such as Redis or RabbitMQ.
+    - As before, but using asyncio?
     - Alternative would be to block and do everything else, then finally return
         the 'OK' response for the final player's 'connect' request. This is
         very weird and wrong.
