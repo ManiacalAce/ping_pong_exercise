@@ -60,19 +60,23 @@
 
 - What if later, we want the players to be controlled by humans? Can players
     still be 'passive' endpoints with this requirement?
-        - Player process would become a 'server' to a UI client that the human
+        - Player process could become a 'server' to a UI client that the human
             interacts with.
-            - Not too bad for a solution.
+            - Would work. Not too bad for a solution.
 - (???) Players have no capability to 'cheat' (they can't make out-of-turn requests
     to other players, etc.). They just adhere to a certain 'interface' that is
     enforced by the referee.
 - For step 3, how do we 'start' with the next phase if we wish to immediately
     return a 'OK' response on every connect?
     - Hand off the next phase to a thread? And that thread will make requests
-        to the 'player' processes?
+        to the 'player' processes? Feels odd, but needs to be done for 2-way
+        comm.
+    - As before, but instead of threads, use a 'messaging' approach. Would need
+        a message queue storage such as Redis or RabbitMQ.
     - Alternative would be to block and do everything else, then finally return
         the 'OK' response for the final player's 'connect' request. This is
-        very weird.
+        very weird and wrong.
+    - **Verdict**: Going with the 'thread' approach for simplicity.
 
 ------------------------------------------------------------------------------
 
@@ -83,12 +87,22 @@
 ## Thoughts
 
 ------------------------------------------------------------------------------
+
 # Implementation
 
 - Servers are involved. Possible choices for RESTful approach:
-    - simple http from Python's standard library? (too verbose?)
-    - Django? (overkill?)
-    - Flask? (lighter than Django, but still overkill?)
+    - simple http from Python's standard library?
+        - Code too verbose?
+    - Django?
+        - Seems like overkill. Django comes with too many batteries included.
+    - Flask?
+        - Lighter than Django. Will do.
+        - Code looks very simple.
+        - Docs mention something about there being a facility to easily launch
+            multiple isolated Flask apps and even multiple instances of the
+            same app with different configs.
+
+**Verdict**: Going with Flask for now.
 
 
 # Misc Questions
