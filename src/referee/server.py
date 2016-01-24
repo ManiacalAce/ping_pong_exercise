@@ -4,22 +4,24 @@ from flask import Flask, request, jsonify
 
 
 app = Flask(__name__)
+logger = app.logger
 
 MAX_TOURNEY_PLAYERS = 2
 connected_players = set()  # should be stored in some persistent storage
 
 
 def start_tourney():
-    print('Ready to beigin! Look whos joined!')
-    print(connected_players)
+    logger.info('Ready to beigin! Look whos joined!')
+    logger.info(connected_players)
 
 
 @app.route('/tournament/connect/', methods=['POST'])
 def connect():
     player_id = int(request.form['player_id'])
     connected_players.add(player_id)
+    # TODO: Disallow reconnects
 
-    print('Player ID: {} connected!'.format(player_id))
+    logger.info('Player ID: {} connected!'.format(player_id))
 
     # When the final player joins, kick off the tourney
     if len(connected_players) == MAX_TOURNEY_PLAYERS:
