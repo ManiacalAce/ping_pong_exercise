@@ -1,1 +1,5 @@
+# Placeholder top level requirements file that some platforms might expect.
+# Delegates to requirements/prod.txt by default.
+# For dev environments, use requirements/dev.txt
+
 -r requirements/prod.txt
