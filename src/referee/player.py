@@ -11,10 +11,9 @@ class Player:
     """
 
     def __init__(self, id, host, port):
-        self.id = id
-        self.remote_host = host
-        self.remote_port = port
-
+        self._id = id
+        self._remote_host = host
+        self._remote_port = port
         self._chosen_number = 0
         self._defense_matrix = set()
 
