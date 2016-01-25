@@ -2,6 +2,7 @@ import threading
 
 from flask import Flask, request, jsonify
 
+from player import Player
 from tournament import (MAX_TOURNEY_PLAYERS, connected_players)
 
 
@@ -17,7 +18,11 @@ def start_tourney():
 @app.route('/tournament/connect/', methods=['POST'])
 def connect():
     player_id = int(request.form['player_id'])
-    connected_players.add(player_id)
+    player_host = request.form['player_host']
+    player_port = int(request.form['player_pot'])
+    player = Player(player_id, player_host, player_port)
+    connected_players[player_id] = player
+
     # TODO: Disallow reconnects
 
     logger.info('Player ID: {} connected!'.format(player_id))
