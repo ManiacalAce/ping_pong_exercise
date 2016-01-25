@@ -1,33 +1,27 @@
-import random
-
 from flask import Flask, jsonify
 import requests
 
+from player import Player
 
-app = Flask(__name__)
+
+player = Player()
+app = Flask('ping_pong_player:' + str(player.id))
 logger = app.logger
-
-player_id = random.randrange(1, 100000000)  # for testing
-player_host = 'localhost'
-player_port = random.randrange(5001, 11000)
-DEFENSE_MATRIX_SIZE = 5
 
 
 @app.route('/choose-number/')
 def choose_number():
-    number = random.randrange(1, 11)  # Abstract away choosing of number
+    player.choose_number()
     return jsonify(**{
-        'chosen_number': number
+        'chosen_number': player.get_chosen_number()
     })
 
 
 @app.route('/make-defense-matrix/')
 def make_defense_matrix():
-    matrix = [
-        random.randrange(1, 11) for _ in range(0, DEFENSE_MATRIX_SIZE)
-    ]
+    player.make_defense_matrix()
     return jsonify(**{
-        'defense_matrix': matrix
+        'defense_matrix': player.get_defense_matrix()
     })
 
 
@@ -39,13 +33,13 @@ def connect_to_referee():
         host=referee_host, port=referee_port
     )
     requests.post(url, data={
-        'player_id': player_id,
-        'player_host': player_host,
-        'player_port': player_port
+        'player_id': player.id,
+        'player_host': player.host,
+        'player_port': player.port
     })
 
     # TODO: This logger doesn't work since 'app' isn't runnning yet.
-    logger.info('Player ID: {} is connected to server!'.format(player_id))
+    logger.info('Player ID: {} is connected to server!'.format(player.id))
     logger.info('what')
 
 
@@ -53,14 +47,13 @@ if __name__ == '__main__':
     # TODO: Do this asynchronously so server is allowed to start? grequests?
     connect_to_referee()
 
-    app.run(debug=True, port=player_port)
+    app.run(debug=True, port=player.port)
 
 
 '''
 TODO
 
 - Fix pre-app.run() logging.
-- Read defense matrix length from some config
 - Take port as param (or randomize)
 
 Refactoring:
