@@ -68,10 +68,12 @@ if __name__ == '__main__':
 '''
 TODO
 
-- Fix pre-app.run() logging.
+- Reorganize player, app creation to facilitate run_demo.py
+- Authentication
 - Take port as param (or randomize)
+- Fix pre-app.run() logging.
 
 Refactoring:
-    - Move BL out of routes and into service file
+    - Glance over and clean up
 
 '''

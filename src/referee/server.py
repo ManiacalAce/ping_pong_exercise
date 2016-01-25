@@ -20,12 +20,18 @@ def connect():
 
     # Players shouldn't be able to 'reset' data by re-connecting
     if player_id in connected_players:
+        # TODO: Return proper error message
         return abort(400)
     else:
         player = Player(player_id, player_host, player_port)
         connected_players[player_id] = player
 
-    logger.info('Player ID: {} connected!'.format(player_id))
+    remaining_players = (MAX_TOURNEY_PLAYERS - len(connected_players))
+    logger.info(
+        'Player ID: {} connected!\nWaiting for {} more players...'.format(
+            player_id, remaining_players
+        )
+    )
 
     # When the final player joins, kick off the tourney
     if len(connected_players) == MAX_TOURNEY_PLAYERS:
@@ -45,9 +51,11 @@ if __name__ == '__main__':
 TODO
 
 - get host, port of player from request for later use.
+- Authentication
 
 Refactoring:
 - move BL out of routes and into service files
 - Error handling
     - int-ing of POST data
+- Re-evaluate name of endpoints
 '''
