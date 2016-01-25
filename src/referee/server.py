@@ -2,7 +2,7 @@ import threading
 
 from flask import Flask, request, jsonify
 
-from players import (MAX_TOURNEY_PLAYERS, connected_players)
+from tournament import (MAX_TOURNEY_PLAYERS, connected_players)
 
 
 app = Flask(__name__)
