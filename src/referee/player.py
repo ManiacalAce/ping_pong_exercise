@@ -35,7 +35,7 @@ class Player:
         return self._remote_port
 
     def choose_number(self):
-        endpoint = self._get_endpoint_url('/choose-number/')
+        endpoint = self.get_endpoint_url('/choose-number/')
         response = requests.post(endpoint)
         data = response.json()
         self._chosen_number = data['chosen_number']
@@ -44,7 +44,7 @@ class Player:
         return self._chosen_number
 
     def make_defense_matrix(self):
-        endpoint = self._get_endpoint_url('/make-defense-matrix/')
+        endpoint = self.get_endpoint_url('/make-defense-matrix/')
         response = requests.post(endpoint)
         data = response.json()
         self._defense_matrix = set(data['defense_matrix'])
@@ -52,7 +52,7 @@ class Player:
     def get_defense_matrix(self):
         return self._defense_matrix
 
-    def _get_endpoint_url(self, path):
+    def get_endpoint_url(self, path):
         if path:
             if path.startswith('/'):
                 path = path[1:]
