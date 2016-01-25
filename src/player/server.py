@@ -7,6 +7,9 @@ import requests
 app = Flask(__name__)
 logger = app.logger
 
+player_id = random.randrange(1, 100000000)  # for testing
+player_host = 'localhost'
+player_port = random.randrange(5001, 11000)
 DEFENSE_MATRIX_SIZE = 5
 
 
@@ -35,9 +38,10 @@ def connect_to_referee():
     url = 'http://{host}:{port}/tournament/connect/'.format(
         host=referee_host, port=referee_port
     )
-    player_id = random.randrange(1, 100000000)  # for testing
     requests.post(url, data={
-        'player_id': player_id
+        'player_id': player_id,
+        'player_host': player_host,
+        'player_port': player_port
     })
 
     # TODO: This logger doesn't work since 'app' isn't runnning yet.
@@ -49,8 +53,7 @@ if __name__ == '__main__':
     # TODO: Do this asynchronously so server is allowed to start? grequests?
     connect_to_referee()
 
-    port = random.randrange(5001, 11000)
-    app.run(debug=True, port=port)
+    app.run(debug=True, port=player_port)
 
 
 '''
