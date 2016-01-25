@@ -18,12 +18,13 @@
 
 ## 2. REST - Referee is a server, players are clients. Clients poll server.
 
-- Ref listens
+- TODO
 
 ### Thoughts
 
 - Players keep 'polling' the referee. This is awkward and wasteful of
     resources.
+- TODO
 
 ------------------------------------------------------------------------------
 
@@ -83,9 +84,11 @@
 
 ## 3.2 REST - Referee and all players are RESTful endpoints. Players are 'active' entities.
 
--
+- TODO
 
 ## Thoughts
+
+- TODO
 
 ------------------------------------------------------------------------------
 
