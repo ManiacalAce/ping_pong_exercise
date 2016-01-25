@@ -1,3 +1,4 @@
+import requests
 
 
 class Player:
@@ -17,8 +18,27 @@ class Player:
         self._chosen_number = 0
         self._defense_matrix = set()
 
+        self._remote_url_base = 'http://{host}:{port}/'.format(
+            host=self._remote_host, port=self._remote_port
+        )
+
+    @property
+    def id(self):
+        return self._id
+
+    @property
+    def remote_host(self):
+        return self._remote_host
+
+    @property
+    def remote_port(self):
+        return self._remote_port
+
     def choose_number(self):
-        pass
+        endpoint = self._get_endpoint_url('/choose-number/')
+        response = requests.post(endpoint)
+        data = response.json()
+        self._chosen_number = data['chosen_number']
 
     def get_chosen_number(self):
         return self._chosen_number
@@ -29,9 +49,22 @@ class Player:
     def get_defense_matrix(self):
         pass
 
+    def _get_endpoint_url(self, path):
+        if path:
+            if path.startswith('/'):
+                path = path[1:]
+            if not path.endswith('/'):
+                path += '/'
+        return '{base_url}{path}'.format(
+            base_url=self._remote_url_base,
+            path=path
+        )
+
 
 '''
 TODO:
-    - Validation (id, host, port, etc.)
+    - Validation:
+        - id, host, port, etc.
+        - choose_number, make_defense_matrix responses
 
 '''
