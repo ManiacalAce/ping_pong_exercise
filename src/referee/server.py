@@ -3,16 +3,13 @@ import threading
 from flask import (Flask, request, jsonify, abort)
 
 from player import Player
-from tournament import (MAX_TOURNEY_PLAYERS, connected_players)
+from tournament import (
+    MAX_TOURNEY_PLAYERS, connected_players, start_tournament
+)
 
 
 app = Flask(__name__)
 logger = app.logger
-
-
-def start_tourney():
-    logger.info('Ready to beigin! Look whos joined!')
-    logger.info(connected_players)
 
 
 @app.route('/tournament/connect/', methods=['POST'])
@@ -32,7 +29,7 @@ def connect():
 
     # When the final player joins, kick off the tourney
     if len(connected_players) == MAX_TOURNEY_PLAYERS:
-        t = threading.Thread(target=start_tourney)
+        t = threading.Thread(target=start_tournament)
         t.start()
 
     return jsonify(**{
