@@ -33,10 +33,9 @@ def connect():
         player = Player(player_id, player_host, player_port)
         tournament.add_player(player)
 
-    remaining_players = tournament.get_vacancies()
     logger.info(
         'Player ID: {} connected!\nWaiting for {} more players...'.format(
-            player_id, remaining_players
+            player_id, tournament.get_vacancies()
         )
     )
 
