@@ -3,13 +3,20 @@ import threading
 from flask import (Flask, request, jsonify, abort)
 
 from player import Player
-from tournament import (
-    MAX_TOURNEY_PLAYERS, connected_players, start_tournament
-)
+from tournament import Tournament
 
 
 app = Flask(__name__)
 logger = app.logger
+
+# TODO: Refactor this and add facility that sets up tournaments on-demand.
+tournament = Tournament()
+
+
+def _start_tournament(tournament):
+    """Quick helper to pass in as thread callback"""
+    logger.info('Let the tournament begin!')
+    tournament.start()
 
 
 @app.route('/tournament/connect/', methods=['POST'])
@@ -19,14 +26,14 @@ def connect():
     player_port = int(request.form['player_pot'])
 
     # Players shouldn't be able to 'reset' data by re-connecting
-    if player_id in connected_players:
+    if tournament.has_player(player_id):
         # TODO: Return proper error message
         return abort(400)
     else:
         player = Player(player_id, player_host, player_port)
-        connected_players[player_id] = player
+        tournament.add_player(player)
 
-    remaining_players = (MAX_TOURNEY_PLAYERS - len(connected_players))
+    remaining_players = tournament.get_vacancies()
     logger.info(
         'Player ID: {} connected!\nWaiting for {} more players...'.format(
             player_id, remaining_players
@@ -34,8 +41,8 @@ def connect():
     )
 
     # When the final player joins, kick off the tourney
-    if len(connected_players) == MAX_TOURNEY_PLAYERS:
-        t = threading.Thread(target=start_tournament)
+    if tournament.is_at_max_capacity():
+        t = threading.Thread(target=_start_tournament, args=(tournament,))
         t.start()
 
     return jsonify(**{
@@ -50,7 +57,6 @@ if __name__ == '__main__':
 '''
 TODO
 
-- get host, port of player from request for later use.
 - Authentication
 
 Refactoring:
