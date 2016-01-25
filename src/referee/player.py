@@ -44,10 +44,13 @@ class Player:
         return self._chosen_number
 
     def make_defense_matrix(self):
-        pass
+        endpoint = self._get_endpoint_url('/make-defense-matrix/')
+        response = requests.post(endpoint)
+        data = response.json()
+        self._defense_matrix = set(data['defense_matrix'])
 
     def get_defense_matrix(self):
-        pass
+        return self._defense_matrix
 
     def _get_endpoint_url(self, path):
         if path:
@@ -66,5 +69,6 @@ TODO:
     - Validation:
         - id, host, port, etc.
         - choose_number, make_defense_matrix responses
-
+        - Does player-defense-matrix size validation go here on server side? Or
+            are players fully responsible for that? Fraud issues?
 '''
