@@ -4,7 +4,7 @@ __pycache__/
 *.py[cod]
 
 # Log files
-.log
+*.log
 
 # Temporary notes
 docs/design/notes.md
