@@ -9,7 +9,7 @@ app = Flask('ping_pong_player:' + str(player.id))
 logger = app.logger
 
 
-@app.route('/choose-number/')
+@app.route('/choose-number/', methods=['POST'])
 def choose_number():
     player.choose_number()
     return jsonify(**{
@@ -17,7 +17,7 @@ def choose_number():
     })
 
 
-@app.route('/make-defense-matrix/')
+@app.route('/make-defense-matrix/', methods=['POST'])
 def make_defense_matrix():
     player.make_defense_matrix()
     return jsonify(**{
@@ -72,6 +72,8 @@ TODO
 - Authentication
 - Take port as param (or randomize)
 - Fix pre-app.run() logging.
+- Ponder again on whether or not /choose-number/, and /make-defense-matrix/
+should be POST-only.
 
 Refactoring:
     - Glance over and clean up
