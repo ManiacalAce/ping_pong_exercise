@@ -111,5 +111,8 @@
 
 # Misc Questions
 
+- Is the 'defense matrix' of a player a set of unique numbers or are duplicates
+    allowed in the array (eg. depending on a 'luck' factor, ie. how lucky you
+    were when the random number generation process happened)?
 - The size of a defending player's matrix - should this be held by the player
     (as the problem suggests) or the server (to prevent fraud)?
