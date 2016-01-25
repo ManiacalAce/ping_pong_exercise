@@ -23,7 +23,7 @@ def _start_tournament(tournament):
 def connect():
     player_id = int(request.form['player_id'])
     player_host = request.form['player_host']
-    player_port = int(request.form['player_pot'])
+    player_port = int(request.form['player_port'])
 
     # Players shouldn't be able to 'reset' data by re-connecting
     if tournament.has_player(player_id):
