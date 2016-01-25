@@ -40,12 +40,15 @@ class Tournament:
         return self.get_vacancies() == 0
 
     def start(self):
+        # Draw games
         pass
 
 
 '''
 TODO:
     - Draw games for various stages
+    - Reporting
+
     - If a player can't be reached for a certain interval, he must forfeit the
         round/game.
     - Custom exceptions

@@ -10,7 +10,7 @@ app = Flask(__name__)
 logger = app.logger
 
 # TODO: Refactor this and add facility that sets up tournaments on-demand.
-tournament = Tournament()
+tournament = Tournament(max_players=2)
 
 
 def _start_tournament(tournament):
@@ -26,7 +26,7 @@ def connect():
     player_port = int(request.form['player_port'])
 
     # Players shouldn't be able to 'reset' data by re-connecting
-    if tournament.has_player(player_id):
+    if tournament.has_player(player_id) or tournament.is_at_max_capacity():
         # TODO: Return proper error message
         return abort(400)
     else:
