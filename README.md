@@ -4,27 +4,30 @@
 **Note**: Still a work in progress!
 
 The solution uses Python 3.
+
 To run http servers, the Flask library is also used.
 
 
 ## Installation
 
-1. Clone the repository.
+Clone the repository.
 
 ```sh
-git clone git@github.com:ManiacalAce/ping_pong_exercise.git
+$ git clone git@github.com:ManiacalAce/ping_pong_exercise.git
 ```
 
-2. Then go into the project and install the dependencies.
+Then go into the project and install the dependencies.
 
 ```sh
-cd ping_pong_exercise/
-pip install -r requirements/dev.txt
+$ cd ping_pong_exercise/
+
+$ pip install -r requirements/dev.txt
 ```
 
-3. Run the demo.
+Run the demo.
+
 ```sh
-python run.py
+$ python run.py
 ```
 
 **Note**: `run.py` currently doesn't work. It wll be implemented soon!
