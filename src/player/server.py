@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import requests
 
 from player import Player
@@ -23,6 +23,21 @@ def make_defense_matrix():
     return jsonify(**{
         'defense_matrix': player.get_defense_matrix()
     })
+
+
+def _shutdown_server():
+    func = request.environ.get('werkzeug.server.shutdown')
+    if func is None:
+        raise RuntimeError('Not running with the werkzeug server')
+    func()
+
+
+@app.route('/shutdown/', methods=['POST'])
+def shutdown():
+    _shutdown_server()
+    msg = 'Player {} is shutting down...'.format(player.id)
+    logger.info(msg)
+    return msg
 
 
 def connect_to_referee():
