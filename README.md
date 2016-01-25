@@ -27,10 +27,10 @@ $ pip install -r requirements/dev.txt
 Run the demo.
 
 ```sh
-$ python run.py
+$ python src/run.py
 ```
 
-**Note**: `run.py` currently doesn't work. It wll be implemented soon!
+**Note**: `src/run.py` currently doesn't work. It wll be implemented soon!
 
 
 ## Design
@@ -54,7 +54,7 @@ reasonings.
 * Implementing the actual game logic.
 * The reporting module.
 * Loading player information from a config file.
-* `run.py` to launch the demo.
+* `src/run.py` to launch the demo.
 
 ### Enhancements
 * Explore the 'active player' approach of solving this problem.
