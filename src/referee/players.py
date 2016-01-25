@@ -10,10 +10,10 @@ class Player:
     This class is responsible for wrapping an actual player endpoint.
     """
 
-    def __init__(self):
-        self.id = None
-        self.remote_host = None
-        self.remote_port = None
+    def __init__(self, id, host, port):
+        self.id = id
+        self.remote_host = host
+        self.remote_port = port
 
         self._chosen_number = 0
         self._defense_matrix = set()
@@ -29,3 +29,10 @@ class Player:
 
     def get_defense_matrix(self):
         pass
+
+
+'''
+TODO:
+    - Validation (id, host, port, etc.)
+
+'''
