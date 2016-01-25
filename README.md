@@ -55,6 +55,7 @@ reasonings.
 * The reporting module.
 * Loading player information from a config file.
 * `src/run.py` to launch the demo.
+* Authentication
 
 ### Enhancements
 * Explore the 'active player' approach of solving this problem.
