@@ -131,7 +131,7 @@ class Stage:
         games = []
         pool = list(player_pool)  # Make copy since we shuffle in-place
         random.shuffle(pool)
-        for i in range(len(pool), 2):
+        for i in range(0, len(pool), 2):
             p1 = pool[i]
             p2 = pool[i+1]
             game = Game(p1, p2)
