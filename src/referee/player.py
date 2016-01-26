@@ -63,6 +63,10 @@ class Player:
             path=path
         )
 
+    def __repr__(self):
+        return 'Player ID: {} (Host: {}, Port: {})'.format(
+            self.id, self.remote_host, self.remote_port
+        )
 
 '''
 TODO:
