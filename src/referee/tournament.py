@@ -22,6 +22,7 @@ class Round:
         self._attacker = attacker
         self._defender = defender
         self._winner = None
+        self._loser = None
 
     def start(self):
         """Run the round and return the winning player"""
@@ -30,12 +31,15 @@ class Round:
         defender_matrix = self._defender.get_defense_matrix()
 
         if attacker_number in defender_matrix:
-            self._winner = self._defender
+            self._winner, self._loser = self._defender, self._attacker
         else:
-            self._winner = self._attacker
+            self._winner, self._loser = self._attacker, self._defender
 
     def get_winner(self):
         return self._winner
+
+    def get_loser(self):
+        return self._loser
 
     def get_result_summary(self):
         pass
@@ -118,7 +122,6 @@ class Tournament:
 '''
 TODO:
     - Draw games for various stages
-    - 'Stage' and 'Game' as their own entities?
     - Reporting
         - stage titles
 
