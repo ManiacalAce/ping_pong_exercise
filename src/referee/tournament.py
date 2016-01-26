@@ -21,17 +21,21 @@ class Round:
     def __init__(self, attacker, defender):
         self._attacker = attacker
         self._defender = defender
+        self._winner = None
 
-    def run(self):
+    def start(self):
         """Run the round and return the winning player"""
 
         attacker_number = self._attacker.get_chosen_number()
         defender_matrix = self._defender.get_defense_matrix()
 
         if attacker_number in defender_matrix:
-            return self._defender
+            self._winner = self._defender
         else:
-            return self._attacker
+            self._winner = self._attacker
+
+    def get_winner(self):
+        return self._winner
 
     def get_result_summary(self):
         pass
@@ -107,7 +111,7 @@ class Tournament:
     def is_at_max_capacity(self):
         return self.get_vacancies() == 0
 
-    def run(self):
+    def start(self):
         pass
 
 
