@@ -117,8 +117,26 @@ class Stage:
 
         self._games = self._draw_games(from_players)
 
+    def start(self):
+        for game in self._games:
+            game.start()
+
+    def get_winners(self):
+        return [game.get_winner() for game in self._games]
+
+    def get_losers(self):
+        return [game.get_loser() for game in self._games]
+
     def _draw_games(player_pool):
-        return []
+        games = []
+        pool = list(player_pool)  # Make copy since we shuffle in-place
+        random.shuffle(pool)
+        for i in range(len(pool), 2):
+            p1 = pool[i]
+            p2 = pool[i+1]
+            game = Game(p1, p2)
+            games.append(game)
+        return games
 
 
 class Tournament:
