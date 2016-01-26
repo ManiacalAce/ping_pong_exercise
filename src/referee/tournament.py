@@ -1,7 +1,10 @@
 import logging
+import random
 
 
 logger = logging.getLogger(__name__)
+
+WINNING_SCORE = 5  # TODO: Make this configurable?
 
 
 """
@@ -53,14 +56,49 @@ class Game:
     def __init__(self, player1, player2):
         self._player1 = player1
         self._player2 = player2
+        self._winner = None
+        self._loser = None
 
-    def run():
-        # determine order of play
-        # begin various rounds
+    def start(self):
+        attacker, defender = self._determine_order_of_play()
+        p1_score, p2_score = 0, 0
+
+        while ((p1_score != WINNING_SCORE) or (p2_score != WINNING_SCORE)):
+            attacker.choose_number()
+            defender.make_defense_matrix()
+
+            round = Round(attacker, defender)
+            round.run()
+
+            round_winner = round.get_winner()
+            if round_winner == self._player1:
+                p1_score += 1
+            elif round_winner == self._player2:
+                p2_score += 1
+
+            attacker = round_winner
+            defender = round.get_loser()
+
+        if p1_score == WINNING_SCORE:
+            self._winner, self._loser = self._player1, self._player2
+        elif p2_score == WINNING_SCORE:
+            self._winner, self._loser = self._player2, self._player1
+
+    def get_winner(self):
+        return self._winner
+
+    def get_loser(self):
+        return self._loser
+
+    def get_result_summary(self):
         pass
 
-    def _determine_who_goes_first(self):
-        return self._player1
+    def _determine_order_of_play(self):
+        """Randomly determines order of play."""
+        order_of_play = [self._player1, self._player2]
+        # shuffle em up!
+        random.shuffle(order_of_play)
+        return order_of_play
 
 
 class Stage:
@@ -129,6 +167,8 @@ TODO:
     - If a player can't be reached for a certain interval, he must forfeit the
         round/game.
     - Custom exceptions
+    - There's comparison happening between player references across different
+    classes. Compare only IDs? (like we would do if we had DBs)
     - Design 'Game' class to facilitate games between > 2 players?
         - Can be done, but assuming it's unnecessary.
 
