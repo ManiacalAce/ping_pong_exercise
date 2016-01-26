@@ -58,6 +58,7 @@ class Game:
         self._player2 = player2
         self._winner = None
         self._loser = None
+        self._rounds = []
 
     def start(self):
         attacker, defender = self._determine_order_of_play()
@@ -68,6 +69,7 @@ class Game:
             defender.make_defense_matrix()
 
             round = Round(attacker, defender)
+            self._rounds.append(round)
             round.run()
 
             round_winner = round.get_winner()
