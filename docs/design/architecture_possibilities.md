@@ -61,9 +61,9 @@
 
 - What if later, we want the players to be controlled by humans? Can players
     still be 'passive' endpoints with this requirement?
-        - Player process could become a 'server' to a UI client that the human
-            interacts with.
-            - Would work. Not too bad for a solution.
+    - Player process could become a 'server' to a UI client that the human
+        interacts with.
+        - Would work. Not too bad for a solution.
 - (???) Players have no capability to 'cheat' (they can't make out-of-turn requests
     to other players, etc.). They just adhere to a certain 'interface' that is
     enforced by the referee.
