@@ -147,11 +147,12 @@ class Tournament:
     """
 
     def __init__(self, max_players=8):
-        self._connected_players = {}  # player_id -> player
-
         if (max_players % 2) != 0:
             max_players += 1
+
+        self._connected_players = {}  # player_id -> player
         self._max_players = max_players
+        self._stages = []
 
     def add_player(self, player):
         if player.id in self._connected_players:
@@ -174,36 +175,38 @@ class Tournament:
         return self.get_vacancies() == 0
 
     def start(self):
-        pass
+        active_players = self._connected_players.values()
+        while len(active_players) > 1:
+            stage = Stage(active_players)
+            self._stages.append(stage)
+            stage.run()
+            active_players = stage.get_winners()
+            losers = stage.get_losers()
 
+            # Tell losing players to disconnect
+            for loser in losers:
+                loser.shutdown()
+
+        # The last active player is the winner
+        tournament_winner = active_players[0]
+
+        logger.info(
+            'The tournament winer is... Player ID {}!'.format(
+                tournament_winner.id
+            )
+        )
 
 '''
 TODO:
-    - Draw games for various stages
     - Reporting
         - stage titles
+    - There's comparison happening between player references across different
+    classes. Compare only IDs? (like we would do if we had DBs)
 
     - Make 'winning' score configurable.
     - If a player can't be reached for a certain interval, he must forfeit the
         round/game.
     - Custom exceptions
-    - There's comparison happening between player references across different
-    classes. Compare only IDs? (like we would do if we had DBs)
     - Design 'Game' class to facilitate games between > 2 players?
         - Can be done, but assuming it's unnecessary.
-
-
-    - 8 players
-        - Stage 1
-            - 8 players, 4 games, 4 winners
-        - Stage 2
-            - 4 players, 2 games, 2 winners
-        - Stage 3
-            - 2 players, 1 game, 1 winner
-
-    - Have active players list
-    - While len(active_players) > 1:
-        - stage = make_stage(active_players) # stage with relevant no. of games
-        - for game in stage.games:
-            - game.start()
 '''
