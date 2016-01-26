@@ -51,10 +51,9 @@ reasonings.
 ## Pending Items
 
 ### Critical
-* Implementing the actual game logic.
+* `src/run.py` to launch the demo.
 * The reporting module.
 * Loading player information from a config file.
-* `src/run.py` to launch the demo.
 * Authentication
 
 ### Enhancements
